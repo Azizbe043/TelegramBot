@@ -178,7 +178,7 @@ async def invite_cmd(message: Message):
 @router.message(Command("top"))
 async def top_cmd(message: Message):
     data = load_data()
-    top = sorted(data.items(), key=lambda x: x[1]["friends"], reverse=True)[:10]
+    top = sorted(data.items(), key=lambda x: x[1]["friends"], reverse=True)[:5]
 
     if not top:
         await message.answer("Hozircha hech kim ro'yxatdan o'tmagan.")
