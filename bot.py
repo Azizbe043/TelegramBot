@@ -55,7 +55,7 @@ def get_channel_button():
 
 # === /start (with or without referral) ===
 @router.message(CommandStart(deep_link=True))
-async def start_with_ref(message: Message, command: types.BotCommand, state: FSMContext):
+async def start_with_ref(message: Message, state: FSMContext):
     user_id = str(message.from_user.id)
     data = load_data()
 
@@ -67,7 +67,12 @@ async def start_with_ref(message: Message, command: types.BotCommand, state: FSM
         await message.answer("Siz allaqachon ro'yxatdan o'tgansiz.")
         return
 
-    referrer_id = command.args
+    # Bu yerda referrer_id ni qo‘l bilan ajratamiz
+    try:
+        referrer_id = message.text.split(" ")[1]
+    except IndexError:
+        referrer_id = None
+
     if referrer_id and referrer_id != user_id:
         if referrer_id not in data:
             data[referrer_id] = {"friends": 1, "first_name": "", "last_name": ""}
